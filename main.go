@@ -31,7 +31,7 @@ func putClient(c *gin.Context) {
 	var updateClient models.Client
 
 	if err := c.BindJSON(&updateClient); err != nil {
-		c.JSON(404, gin.H{"error": "Invalid JSON"})
+		c.JSON(400, gin.H{"error": "Invalid JSON"})
 		return
 	}
 
@@ -39,7 +39,7 @@ func putClient(c *gin.Context) {
 		if fmt.Sprint(client.ID) == id {
 			client.ID = updateClient.ID
 			clients[i] = updateClient
-
+			saveClientes()
 			c.JSON(200, gin.H{
 				"message":       "Cliente updated sucessfully",
 				"id_atualizado": id,
@@ -47,9 +47,8 @@ func putClient(c *gin.Context) {
 			})
 			return
 		}
-
-		c.JSON(400, gin.H{"error": "client not found"})
 	}
+	c.JSON(404, gin.H{"error": "client not found"})
 }
 
 func deleteClient(c *gin.Context) {
