@@ -37,12 +37,12 @@ func putClient(c *gin.Context) {
 
 	for i, client := range clients {
 		if fmt.Sprint(client.ID) == id {
-			client.ID = updateClient.ID
+			updateClient.ID = client.ID 
 			clients[i] = updateClient
 			saveClientes()
 			c.JSON(200, gin.H{
-				"message":       "Cliente updated sucessfully",
-				"id_atualizado": id,
+				"message":       "Client updated sucessfully",
+				"id": id,
 				"new_client":    updateClient,
 			})
 			return
